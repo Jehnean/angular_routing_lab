@@ -1,4 +1,4 @@
-var app = angular.module('wineApp', ['ng-route']);
+var app = angular.module('wineApp', ['ngRoute']);
 
 ////////////
 // ROUTES //
