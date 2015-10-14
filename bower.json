@@ -1,0 +1,16 @@
+{
+  "name": "angular_routing_lab",
+  "version": "0.0.0",
+  "authors": [
+    "nathanallen"
+  ],
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7"
+  }
+}
