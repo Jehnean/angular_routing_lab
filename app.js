@@ -13,10 +13,10 @@ app.config(function($routeProvider, $locationProvider){
       controller: 'WinesIndexCtrl'
     })
 
-  // $locationProvider.html5Mode({
-  //   enabled: true,
-  //   requireBase: false
-  // });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 
 })
 
