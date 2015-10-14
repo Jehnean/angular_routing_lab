@@ -1,5 +1,9 @@
 var app = angular.module('wineApp', ['ngRoute']);
 
+////////////
+// ROUTES //
+////////////
+
 app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
@@ -23,16 +27,23 @@ app.config(function($routeProvider, $locationProvider){
 
 })
 
-app.controller('WinesIndexCtrl',function($scope, $routeParams, WineService){
+/////////////////
+// CONTROLLERS //
+/////////////////
+
+app.controller('WinesIndexCtrl',function($scope, WineService){
   console.log("Wine Index")
   $scope.wines = WineService.query();
 })
 
-app.controller('WinesShowCtrl',function($scope, $routeParams, WineService){
+app.controller('WinesShowCtrl',function($scope, WineService, $routeParams){
   console.log("Wine Show")
-  var id = $routeParams.id;
-  $scope.wine = WineService.get(id);
+  $scope.wine = WineService.get($routeParams.id);
 })
+
+////////////
+// MODELS //
+////////////
 
 app.factory('WineService', function(){
 
@@ -54,9 +65,14 @@ app.factory('WineService', function(){
 })
 
 
+
+
+
+
+
 /*
- * Mock Wine JSON
- * Later this data will be retrieved using AJAX
+ * Temporary Mock JSON
+ * Eventually we will retrieve this data using AJAX
  */
 
 ALL_WINES = [
