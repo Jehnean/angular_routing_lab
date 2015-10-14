@@ -8,7 +8,8 @@ app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
     .when('/', {
-      template: 'Home!'
+      // template: 'Home!',
+      templateUrl: '/templates/wines-index.html'
     })
 
   // $locationProvider.html5Mode({
