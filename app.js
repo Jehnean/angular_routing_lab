@@ -9,7 +9,8 @@ app.config(function($routeProvider, $locationProvider){
   $routeProvider
     .when('/', {
       // template: 'Home!',
-      templateUrl: '/templates/wines-index.html'
+      templateUrl: '/templates/wines-index.html',
+      controller: 'WinesIndexCtrl'
     })
 
   // $locationProvider.html5Mode({
@@ -23,8 +24,9 @@ app.config(function($routeProvider, $locationProvider){
 // CONTROLLERS //
 /////////////////
 
-app.controller('WinesIndexCtrl',function($scope){
+app.controller('WinesIndexCtrl',function($scope, WineService){
   console.log("Wine Index")
+  $scope.wines = WineService.query();
 })
 
 app.controller('WinesShowCtrl',function($scope){
