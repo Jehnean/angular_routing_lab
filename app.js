@@ -1,4 +1,4 @@
-var app = angular.module('wineApp', ['ngRoute', $http]);
+var app = angular.module('wineApp', ['ngRoute']);
 
 ////////////
 // ROUTES //
@@ -25,7 +25,7 @@ app.config(function($routeProvider, $locationProvider){
         enabled: true,
         requireBase: true
     });
-
+    
 })
 
 /////////////////
@@ -36,22 +36,25 @@ app.config(function($routeProvider, $locationProvider){
   console.log("Wines Index");
   $scope.hello = "Hello from Wines Index!"
   // $scope.wines = WineService.query();
-$http.getWines();
+    $http.get('http://daretoexplore.herokuapp.com/wines')
+    .then(function(response, err) {
+        if(err){
+            console.log('error: ', err);
+        }
+    //success method:
+    $scope.wines = response.data;
+  });
 })
 
-app.controller('WinesShowCtrl', function($scope, WineService, $routeParams){
-  console.log($routeParams);
-  $scope.wine = WineService.get($routeParams.id)
-  $scope.picture = WineService.get($routeParams.picture)
+app.controller('WinesShowCtrl', function($scope, $routeParams, $http){
+    var idString = ($routeParams.id);
+  console.log(idString);
+  $http.get('http://daretoexplore.herokuapp.com/wines/' +  $routeParams.id)
+  .then(function(response, err){
+      $scope.wine = response.data;
+  });
+  // $scope.picture = $http.get($routeParams.picture)
 });
-
-function getWines(){
-    $http
-      .get('http://daretoexplore.herokuapp.com/wines/')
-      .then(function(response){
-        self.all = response.data.wines;
-    });
-}
 
 ////////////
 // MODELS //
