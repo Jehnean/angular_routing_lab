@@ -1,33 +1,52 @@
 var app = angular.module('wineApp', ['ngRoute']);
 
+////////////
+// ROUTES //
+////////////
+
 app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
-    .when('/', {
-      tempateUrl: 'templates/wines-index.html',
-      controller: WinesIndexCtrl
+  .when('/', {
+      // template: 'Home!'
+      templateUrl: 'templates/wines-index.html',
+      controller: 'WinesIndexCtrl'
     })
-    .when('/wines', {
+  .when('/wines/:id', {
+        // template: 'WINES SHOW PAGE'
         templateUrl: 'templates/wines-show.html',
-        controller: WinesShowCtrl
+        controller: 'WinesShowCtrl'
+    })
+  .otherwise({
+    redirectTo: '/'
     });
 
-});
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: true
+    });
 
-$locationProvider.html5mode({
-    enabled: true,
-    requireBase: false
-});
+})
 
-app.controller('WinesIndexCtrl', function ($scope) {
-  $scope.hello = "wine index controller working";
-});
+/////////////////
+// CONTROLLERS //
+/////////////////
 
-app.controller('WinesShowCtrl',function($scope){
-  // console.log("Wine Show");
-  $scope.wine = "name of wine";
-});
+ app.controller('WinesIndexCtrl', function($scope, WineService){
+  console.log("Wines Index");
+  $scope.hello = "Hello from Wines Index!"
+  $scope.wines = WineService.query();
+})
 
+app.controller('WinesShowCtrl', function($scope, WineService, $routeParams){
+  console.log($routeParams);
+  $scope.wine = WineService.get($routeParams.id)
+  $scope.picture = WineService.get($routeParams.picture)
+})
+
+////////////
+// MODELS //
+////////////
 
 app.factory('WineService', function(){
 
@@ -35,12 +54,12 @@ app.factory('WineService', function(){
 
   WineService.query = function(){
     return ALL_WINES;
-  };
+  }
 
   WineService.get = function(id){
-    var id = parseInt(id);
+    var temp = parseInt(id);
     return ALL_WINES.find(function(wine){
-      return wine.id == id;
+      return wine.id == temp;
     });
   }
 
@@ -169,3 +188,4 @@ ALL_WINES = [
         "picture": "http://s3-us-west-2.amazonaws.com/sandboxapi/bouscat.jpg"
     }
 ];
+
