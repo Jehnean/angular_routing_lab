@@ -1,10 +1,10 @@
-var app = angular.module('wineApp', []);
+var app = angular.module('wineApp', ['ngRoute']);
 
 ////////////
 // ROUTES //
 ////////////
 
-app.config(function($routeProvider, $locationProvider){
+app.config(function($routeProvider){
 
   $routeProvider
     .when('/', {
