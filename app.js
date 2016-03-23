@@ -4,7 +4,7 @@ var app = angular.module('wineApp', ['ngRoute']);
 // ROUTES //
 ////////////
 
-app.config(function($routeProvider, $locationProvider){
+app.config(function($routeProvider){
 
   $routeProvider
     .when('/', {
@@ -12,16 +12,20 @@ app.config(function($routeProvider, $locationProvider){
       templateUrl: 'templates/wines-index.html',
       controller: 'WinesIndexCtrl'
     })
-    .when('/wines/:id', {
-        //template: 'Wines Page'
+  .when('/wines/:id', {
+        // template: 'WINES SHOW PAGE'
         templateUrl: 'templates/wines-show.html',
         controller: 'WinesShowCtrl'
     })
+  .otherwise({
+    redirectTo: '/'
+    });
 
   $locationProvider.html5Mode({
     enabled: true,
     requireBase: false
   });
+
 
 })
 
@@ -29,16 +33,31 @@ app.config(function($routeProvider, $locationProvider){
 // CONTROLLERS //
 /////////////////
 
-app.controller('WinesIndexCtrl',function($scope, WineService){
-  console.log("Wine Index")
-  $scope.hello = "HELLO from Wines Index Ctrl"
-  $scope.wines = WineService.query();
+
+ app.controller('WinesIndexCtrl', function($scope, $http){
+  console.log("Wines Index");
+  $scope.hello = "Hello from Wines Index!"
+  // $scope.wines = WineService.query();
+    $http.get('http://daretoexplore.herokuapp.com/wines')
+    .then(function(response, err) {
+        if(err){
+            console.log('error: ', err);
+        }
+    //success method:
+    $scope.wines = response.data;
+  });
 })
 
-app.controller('WinesShowCtrl',function($scope, WineService, $routeParams){
-  console.log("Wine Show");
-  $scope.wine = WineService.get($routeParams.id);
-})
+app.controller('WinesShowCtrl', function($scope, $routeParams, $http){
+    var idString = ($routeParams.id);
+  console.log(idString);
+  $http.get('http://daretoexplore.herokuapp.com/wines/' +  $routeParams.id)
+  .then(function(response, err){
+      $scope.wine = response.data;
+  });
+  // $scope.picture = $http.get($routeParams.picture)
+});
+
 
 ////////////
 // MODELS //
@@ -53,9 +72,9 @@ app.factory('WineService', function(){
   }
 
   WineService.get = function(id){
-    var id = parseInt(id);
+    var temp = parseInt(id);
     return ALL_WINES.find(function(wine){
-      return wine.id == id;
+      return wine.id == temp;
     });
   }
 
@@ -184,3 +203,4 @@ ALL_WINES = [
         "picture": "http://s3-us-west-2.amazonaws.com/sandboxapi/bouscat.jpg"
     }
 ];
+

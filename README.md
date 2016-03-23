@@ -20,10 +20,10 @@ Our data (a list of wines) lives at the bottom of `app.js`. Eventually we will u
 <a href="#wine-show-challenge">Wine Show Challenge</a>
 
 ### Setup
-* Clone this repo.
+* Clone this repo. Consider doing a `git checkout -b in-progress` or something similar to work there.
 * **Make sure to `bower install`.**
 * Note: We will need to run a local server once we start playing with routing.
-    - In the application directory run `python -m SimpleHTTPServer`.
+    - In the application directory run `python -m SimpleHTTPServer`. (You can do `http-server` or `budo app.js --open` instead, if you have them installed.)
     - Then open your browser to "localhost:8000" (or similar).
 
 ## ng-route
@@ -34,7 +34,7 @@ A Single Page App needs a way of responding to user navigation. In order to perf
     * Go to `index.html` and uncomment the angular-route script.
     * Add an `ng-view` attribute to the `div` on `index.html`, line 23.
 2. Configure your routes:
-    * In `app.js`, we need to add the `ng-route` module:
+    * In `app.js`, we need to add the `ngRoute` module:
 
         ``` javascript
             var app = angular.module('wineApp', ['ngRoute']);
@@ -56,7 +56,7 @@ A Single Page App needs a way of responding to user navigation. In order to perf
     * You should see "Home!"
 
 4. Use a template file instead of a string:
-    * Change `template: 'Home!'` to `templateUrl: '/templates/wines-index.html`
+    * Change `template: 'Home!'` to `templateUrl: '/templates/wines-index.html'`
     * Refresh, you should see the content of `/templates/wines-index.html`.
 
 5. Set up a controller:
@@ -105,7 +105,7 @@ Add, or uncomment, the following in your route configuration so that we don't ha
 
 Now instead of linking to `#/wines/1424` we can link to "/wines/1424".
 
-### Wine Show Challege
+### Wine Show Challenge
 To setup a `wines#show` route, we need to first figure out how to capture the id parameter in the URL.
 
 For each of your wines on the `wines#index` page, let's add a link:
@@ -137,7 +137,7 @@ app.controller('WinesShowCtrl', function ($scope, WineService, $routeParams) {
 });
 ```
 
-Can you get it working now that you know how to grab the corret `id`? How would you display only that individual wine?
+Can you get it working now that you know how to grab the correct `id`? How would you display only that individual wine?
 
 ### Stretch: Prettify
 Go crazy. Use Bootstrap to make a fancy index and show page, listing out all the wine info, and showing an image for each of them.
