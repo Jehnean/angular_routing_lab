@@ -1,38 +1,33 @@
 var app = angular.module('wineApp', ['ngRoute']);
 
-////////////
-// ROUTES //
-////////////
-
-app.config(function($routeProvider){
+app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
     .when('/', {
-      template: 'Home!'
+      tempateUrl: 'templates/wines-index.html',
+      controller: WinesIndexCtrl
     })
+    .when('/wines', {
+        templateUrl: 'templates/wines-show.html',
+        controller: WinesShowCtrl
+    });
 
-  // $locationProvider.html5Mode({
-  //   enabled: true,
-  //   requireBase: false
-  // });
+});
 
-})
+$locationProvider.html5mode({
+    enabled: true,
+    requireBase: false
+});
 
-/////////////////
-// CONTROLLERS //
-/////////////////
-
-app.controller('WinesIndexCtrl',function($scope){
-  console.log("Wine Index")
-})
+app.controller('WinesIndexCtrl', function ($scope) {
+  $scope.hello = "wine index controller working";
+});
 
 app.controller('WinesShowCtrl',function($scope){
-  console.log("Wine Show")
-})
+  // console.log("Wine Show");
+  $scope.wine = "name of wine";
+});
 
-////////////
-// MODELS //
-////////////
 
 app.factory('WineService', function(){
 
@@ -40,7 +35,7 @@ app.factory('WineService', function(){
 
   WineService.query = function(){
     return ALL_WINES;
-  }
+  };
 
   WineService.get = function(id){
     var id = parseInt(id);
