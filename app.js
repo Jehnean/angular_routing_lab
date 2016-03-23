@@ -1,4 +1,4 @@
-var app = angular.module('wineApp', ['ngRoute']);
+var app = angular.module('wineApp', ['ngRoute', $http]);
 
 ////////////
 // ROUTES //
@@ -32,17 +32,26 @@ app.config(function($routeProvider, $locationProvider){
 // CONTROLLERS //
 /////////////////
 
- app.controller('WinesIndexCtrl', function($scope, WineService){
+ app.controller('WinesIndexCtrl', function($scope, $http){
   console.log("Wines Index");
   $scope.hello = "Hello from Wines Index!"
-  $scope.wines = WineService.query();
+  // $scope.wines = WineService.query();
+$http.getWines();
 })
 
 app.controller('WinesShowCtrl', function($scope, WineService, $routeParams){
   console.log($routeParams);
   $scope.wine = WineService.get($routeParams.id)
   $scope.picture = WineService.get($routeParams.picture)
-})
+});
+
+function getWines(){
+    $http
+      .get('http://daretoexplore.herokuapp.com/wines/')
+      .then(function(response){
+        self.all = response.data.wines;
+    });
+}
 
 ////////////
 // MODELS //
