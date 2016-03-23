@@ -1,4 +1,4 @@
-var app = angular.module('wineApp', ['ngRoute']);
+var app = angular.module('wineApp', []);
 
 ////////////
 // ROUTES //
@@ -8,19 +8,13 @@ app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
     .when('/', {
-      // template: 'Home!',
-      templateUrl: '/templates/wines-index.html',
-      controller: 'WinesIndexCtrl'
-    })
-    .when('/wines/:id', {
-      templateUrl: '/templates/wines-show.html',
-      controller: 'WinesShowCtrl'
+      template: 'Home!'
     })
 
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+  // $locationProvider.html5Mode({
+  //   enabled: true,
+  //   requireBase: false
+  // });
 
 })
 
@@ -28,14 +22,12 @@ app.config(function($routeProvider, $locationProvider){
 // CONTROLLERS //
 /////////////////
 
-app.controller('WinesIndexCtrl',function($scope, WineService){
+app.controller('WinesIndexCtrl',function($scope){
   console.log("Wine Index")
-  $scope.wines = WineService.query();
 })
 
-app.controller('WinesShowCtrl',function($scope, $routeParams, WineService){
+app.controller('WinesShowCtrl',function($scope){
   console.log("Wine Show")
-  $scope.wine = WineService.get($routeParams.id);
 })
 
 ////////////
